@@ -17,6 +17,20 @@ const productRepository = {
       throw error;
     }
   },
+  createProduct: async (product) => {
+    try {
+      const latestProduct = await Product.findOne().sort({ id: -1 });
+      const newId = Math.floor(latestProduct.id) + 1;
+      const newProduct = {
+        ...product,
+        id: newId,
+      };
+      const createdProduct = await Product.create(newProduct);
+      return createdProduct;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = productRepository;

@@ -30,6 +30,30 @@ class ProductController {
       next(err);
     }
   };
+  createProduct = async (req, res, next) => {
+    try {
+      const body = req.body;
+      const product = {
+        image: body.image || "",
+        name: body.name || "",
+        description: body.description || "",
+        price: body.price || "",
+        color: body.color || "",
+      };
+      if (!isNumeric(product.price)) {
+        res.status(BAD_REQUEST).json({
+          message: "Product's price must be a number!",
+        });
+        return;
+      }
+      const createdProduct = await productService.createProduct(product);
+      res.status(OK).json({
+        createdProduct: createdProduct,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 module.exports = ProductController;

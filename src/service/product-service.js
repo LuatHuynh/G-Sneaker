@@ -17,6 +17,14 @@ const productService = {
       throw error;
     }
   },
+  createProduct: async (product) => {
+    try {
+      const newProduct = await productRepository.createProduct(product);
+      return newProduct;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = productService;
