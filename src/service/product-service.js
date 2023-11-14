@@ -9,6 +9,14 @@ const productService = {
       throw error;
     }
   },
+  getProductByID: async (id) => {
+    try {
+      const product = await productRepository.getProductByID(id);
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = productService;
