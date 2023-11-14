@@ -41,8 +41,14 @@ const productRepository = {
   },
   updateProduct: async (product, id) => {
     try {
-      const result = await Product.updateOne({ id: id }, product);
-      return result;
+      await Product.updateOne({ id: id }, product);
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteProductByID: async (id) => {
+    try {
+      await Product.deleteOne({ id: id });
     } catch (error) {
       throw error;
     }

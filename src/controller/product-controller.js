@@ -71,6 +71,23 @@ class ProductController {
       next(err);
     }
   };
+  deleteProductById = async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      if (!isNumeric(id)) {
+        res.status(BAD_REQUEST).json({
+          message: "Product's id invalid!",
+        });
+        return;
+      }
+      await productService.deleteProductByID(id);
+      res.status(OK).json({
+        message: "Deleting product successfully",
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
 }
 
 module.exports = ProductController;

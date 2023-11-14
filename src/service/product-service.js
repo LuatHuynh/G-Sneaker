@@ -45,13 +45,20 @@ const productService = {
           cause: NOT_FOUND,
         });
       }
-      const result = await productRepository.updateProduct(product, id);
-
-      //   if (result.modifiedCount) {
-      //     return result;
-      //   } else {
-      //     throw new Error("Updating product failed or nothing changed!");
-      //   }
+      await productRepository.updateProduct(product, id);
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteProductByID: async (id) => {
+    try {
+      const product = await productRepository.getProductByID(id);
+      if (!product) {
+        throw new Error("Product's id does not exist", {
+          cause: NOT_FOUND,
+        });
+      }
+      await productRepository.deleteProductByID(id);
     } catch (error) {
       throw error;
     }
