@@ -18,7 +18,7 @@ class ProductController {
       const id = req.params.id;
       if (!isNumeric(id)) {
         res.status(BAD_REQUEST).json({
-          message: "Product's id doesn't exist or invalid!",
+          message: "Product's id invalid!",
         });
         return;
       }
@@ -49,6 +49,23 @@ class ProductController {
       const createdProduct = await productService.createProduct(product);
       res.status(OK).json({
         createdProduct: createdProduct,
+      });
+    } catch (err) {
+      next(err);
+    }
+  };
+  updateProduct = async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      if (!isNumeric(id)) {
+        res.status(BAD_REQUEST).json({
+          message: "Product's id invalid!",
+        });
+        return;
+      }
+      await productService.updateProduct(req.body, id);
+      res.status(OK).json({
+        message: "Updating product successfully",
       });
     } catch (err) {
       next(err);

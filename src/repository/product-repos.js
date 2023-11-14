@@ -17,6 +17,14 @@ const productRepository = {
       throw error;
     }
   },
+  lastedProduct: async () => {
+    try {
+      const product = await Product.findOne().sort({ id: -1 });
+      return product;
+    } catch (error) {
+      throw error;
+    }
+  },
   createProduct: async (product) => {
     try {
       const latestProduct = await Product.findOne().sort({ id: -1 });
@@ -27,6 +35,14 @@ const productRepository = {
       };
       const createdProduct = await Product.create(newProduct);
       return createdProduct;
+    } catch (error) {
+      throw error;
+    }
+  },
+  updateProduct: async (product, id) => {
+    try {
+      const result = await Product.updateOne({ id: id }, product);
+      return result;
     } catch (error) {
       throw error;
     }
