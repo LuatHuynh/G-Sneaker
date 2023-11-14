@@ -1,13 +1,27 @@
 const express = require("express");
 require("dotenv").config();
 
+const { PORT } = require("./src/config/constant");
+
 const app = express();
+const bodyParser = require("body-parser");
+const router = require("./src/router/index");
+const errorHandlingMDW = require("./src/middleware/error-handling");
+const connectDB = require("./src/config/db-connect");
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-const port = process.env.PORT || 5000;
+//connect to mongodb
+connectDB();
+
+//routing
+router(app);
+
+//handle error
+app.use(errorHandlingMDW.handleErrorResquest);
+
+const port = PORT || 5000;
 
 app
   .listen(port, () => {
