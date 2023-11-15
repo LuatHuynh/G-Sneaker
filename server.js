@@ -10,9 +10,14 @@ const router = require("./src/router/index");
 const errorHandlingMDW = require("./src/middleware/error-handling");
 const connectDB = require("./src/config/db-connect");
 
-app.use(cors);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 //connect to mongodb
 connectDB();
